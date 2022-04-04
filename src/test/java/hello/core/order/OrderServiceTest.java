@@ -1,13 +1,24 @@
 package hello.core.order;
 
+import hello.core.AppConfig;
 import hello.core.member.*;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class OrderServiceTest {
 
-    MemberService memberService = new MemberServiceImpl();
-    OrderService orderService = new OrderServiceImpl();
+    MemberService memberService;
+    OrderService orderService;
+
+    @BeforeEach
+    void init(){
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        memberService = ac.getBean("memberService", MemberService.class);
+        orderService = ac.getBean("orderService", OrderService.class);
+    }
 
     @Test
     void createOrder(){
